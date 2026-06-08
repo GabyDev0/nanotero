@@ -1,0 +1,26 @@
+[package]
+name = "nanotero"
+version = "0.1.0"
+edition = "2024"
+authors = ["GabyDev0"]
+description = "Un parser ultra-rápido y ligero para el formato de configuración Tero."
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/GabyDev0/nanotero"
+homepage = "https://github.com/GabyDev0/nanotero"
+keywords = ["parser", "config", "tero", "json-alternative"]
+categories = ["parser-implementations", "config"]
+
+[dependencies]
+lex = { workspace = true }
+parser = { workspace = true }
+
+[workspace.dependencies]
+wide = "1.4.0"
+lex = { path = "crates/lex" }
+parser = { path = "crates/parser" }
+
+[workspace]
+members = ["crates/lex", "crates/parser"]
+
+# https://vsadesigns.com/collections/brigid/products/brigid-waterfall-bracelet-fire-ruby-gold
