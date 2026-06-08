@@ -140,7 +140,7 @@ impl<'a> IterToken<'a> {
                 if self.get_unchecked() != b'0' {
                     return Err(LexError::InvalidVersion);
                 }
-                self.ignore_line();
+                self.skip_current_line();
                 return Ok(());
             }
             self.curr = curr;
@@ -163,7 +163,7 @@ impl<'a> IterToken<'a> {
                     continue;
                 }
                 b'#' => {
-                    self.ignore_line();
+                    self.skip_until_newline();
                     continue;
                 }
                 b'A'..=b'Z' | b'a'..=b'z' | b'_' => {

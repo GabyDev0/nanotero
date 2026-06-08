@@ -82,7 +82,15 @@ impl<'a> IterToken<'a> {
         }
         Ok(false)
     }
-    pub(crate) fn ignore_line(&mut self) {
+    #[inline(always)]
+    pub(crate) fn skip_current_line(&mut self) {
+        self.skip_until_newline();
+        if self.is_not_empty() {
+            self.line += 1;
+            self.consume(1);
+        }
+    }
+    pub(crate) fn skip_until_newline(&mut self) {
         let newline = wide::u8x16::splat(b'\n');
         if self.simd(|_, block| {
             let offset: u8 = block.simd_eq(newline).to_bitmask().trailing_zeros() as u8;
