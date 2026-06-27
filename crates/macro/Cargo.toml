@@ -3,6 +3,7 @@ name = "nanotero-macro"
 version = "0.1.0"
 edition = "2024"
 authors = ["GabyDev0"]
+description = "Nanotero procedural macro for Tero deserialization"
 license = "MIT"
 repository = "https://github.com/GabyDev0/nanotero"
 homepage = "https://github.com/GabyDev0/nanotero"
