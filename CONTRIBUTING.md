@@ -1,59 +1,65 @@
-# Contribuir a NanoTero 🐦
+# Contributing to NanoTero 🐦
 
-¡Gracias por tu interés en mejorar NanoTero! Toda ayuda es bienvenida, ya sea reportando un bug, sugiriendo una característica o mejorando la documentación.
-
----
-
-## 🐛 Cómo reportar un problema
-
-Si encuentras un error o el parser falla con una sintaxis válida:
-
-1. Revisa la pestaña de **Issues** para ver si alguien ya lo ha reportado.
-2. Si no es así, abre un nuevo Issue describiendo:
-   * El código `.tero` que causó el fallo.
-   * El error exacto que devolvió la librería (léxico o sintáctico).
-   * El comportamiento que esperabas.
+Thank you for your interest in improving NanoTero! All contributions are welcome, whether it's reporting a bug, suggesting a feature, or improving the documentation.
 
 ---
 
-## 🛠️ Cómo proponer cambios (Pull Requests)
+## 🐛 How to Report an Issue
 
-Si quieres meterle mano al código y programar una mejora, sigue estos pasos:
+If you find a bug or the parser fails with a valid syntax:
 
-1. Haz un **Fork** del repositorio a tu propia cuenta.
-2. Crea una rama para tu característica:
+1. Check the **Issues** tab to see if someone has already reported it.
+2. If not, open a new Issue describing:
+* The `.tero` code that caused the failure.
+* The exact error returned by the library (lexical or syntactic).
+* The behavior you expected.
+
+
+
+---
+
+## 🛠️ How to Propose Changes (Pull Requests)
+
+If you want to get your hands dirty and program an improvement, follow these steps:
+
+1. **Fork** the repository to your own account.
+2. Create a branch for your feature:
 
 ```bash
-   git checkout -b feat/nueva-caracteristica
+git checkout -b feat/new-feature
+
 ```
 
-*(O `fix/nombre-del-bug` si estás corrigiendo un error).*
-3. Escribe tu código respetando las reglas del proyecto (ver abajo).
-4. Asegúrate de añadir **tests** que demuestren que tu cambio funciona.
-5. Abre un **Pull Request** hacia la rama `main` del repositorio original.
+*(Or `fix/bug-name` if you are fixing an error).*
+3. Write your code following the project guidelines (see below).
+4. Make sure to add **tests** that prove your change works.
+5. Open a **Pull Request** targeting the `main` branch of the original repository.
 
 ---
 
-## 📜 Reglas del Código (Estilo Rust)
+## 📜 Code Rules (Rust Style)
 
-Para mantener la base de código limpia y eficiente, tu código debe cumplir lo siguiente antes de enviar el PR:
+To keep the codebase clean and efficient, your code must meet the following requirements before submitting the PR:
 
-* **Formato:** Pasa siempre el formateador oficial para que el estilo sea idéntico al resto del proyecto:
+* **Formatting:** Always run the official formatter to keep the style identical to the rest of the project:
 
 ```bash
 cargo fmt
+
 ```
 
-* **Calidad:** Ejecuta el linter de Rust para asegurarte de que no hay malas prácticas o advertencias:
+* **Quality:** Run the Rust linter to ensure there are no bad practices or warnings:
 
 ```bash
 cargo clippy
+
 ```
 
-* **Estabilidad:** Todos los tests existentes (y los nuevos que añadas) deben pasar sin errores:
+* **Stability:** All existing tests (and the new ones you add) must pass without any errors:
 
 ```bash
 cargo test
+
 ```
 
-¡Gracias por hacer de NanoTero un parser más rápido y estable para todos! 🚀
+Thank you for making NanoTero a faster and more stable parser for everyone! 🚀

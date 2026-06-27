@@ -1,155 +1,157 @@
 # Tero v0.1
 
-Este documento define la sintaxis oficial, las reglas de parseo y el comportamiento esperado para los archivos de configuración **.tero**.
+This document defines the official syntax, parsing rules, and expected behavior for **.tero** configuration files.
 
-## 1. Sistema de Tipos y Valores
+## 1. Type System and Values
 
-**Tero** clasifica sus componentes en dos categorías: **Valores Primitivos** (datos inmutables básicos) y **Estructuras de Datos** (contenedores complejos).
+**Tero** classifies its components into two categories: **Primitive Values** (basic immutable data) and **Data Structures** (complex containers).
 
-### 1.1 Valores Primitivos
+### 1.1 Primitive Values
 
-| Tipo | Sintaxis / Representación | Descripción Técnica |
+| Type | Syntax / Representation | Technical Description |
 | --- | --- | --- |
-| **Entero** | `42`, `-1024` | Almacenado nativamente como entero con signo de 64 bits (`i64`). |
-| **Flotante** | `3.1416`, `-0.005` | Almacenado como número de punto flotante de doble precisión (`f64`). |
-| **Booleano** | `true` o `false` | Valores lógicos tradicionales para control de flujo o banderas. |
-| **Cadena (String)** | `"texto"` | Secuencia de caracteres UTF-8 envuelta obligatoriamente en comillas dobles. |
-| **Nil** | `nil` | Representa la ausencia intencional de cualquier valor o un estado no inicializado. |
+| **Integer** | `42`, `-1024` | Natively stored as a 64-bit signed integer (`i64`). |
+| **Float** | `3.1416`, `-0.005` | Stored as a double-precision floating-point number (`f64`). |
+| **Boolean** | `true` or `false` | Traditional logical values used for flow control or flags. |
+| **String** | `"text"` | A sequence of UTF-8 characters strictly wrapped in double quotes. |
+| **Nil** | `nil` | Represents the intentional absence of any value or an uninitialized state. |
 
-#### Constantes Numéricas Especiales
+#### Special Numeric Constants
 
-Tero reconoce dos palabras clave heredadas del estándar IEEE 754 para operaciones matemáticas excepcionales:
+Tero recognizes two keywords inherited from the IEEE 754 standard for exceptional mathematical operations:
 
-* `NaN`: (*Not a Number*) Resultado de una operación matemática inválida o indeterminada.
-* `Infinity`: Representa un valor numérico que desborda el límite del tipo `f64`.
+* `NaN`: (*Not a Number*) The result of an invalid or undefined mathematical operation.
+* `Infinity`: Represents a numeric value that overflows the limits of the `f64` type.
 
 ---
 
-### 1.2 Estructuras de Datos (Objetos y Colecciones)
+### 1.2 Data Structures (Objects and Collections)
 
-Las estructuras de datos permiten agrupar valores primitivos u otras sub-estructuras, soportando anidación profunda.
+Data structures allow grouping primitive values or other sub-structures, supporting deep nesting.
 
-#### Objetos `{}`
+#### Objects `{}`
 
-Colecciones ordenadas de pares clave-valor. Las claves dentro de un objeto deben ser únicas en su nivel de jerarquía.
+Ordered collections of key-value pairs. Keys within an object must be unique at their specific hierarchy level.
 
-```tero
-configuracion: {
-    activo: true,
-    intentos: 3
+```text
+configuration: {
+    active: true,
+    attempts: 3
 }
 
 ```
 
-#### Arreglos (Arrays) `[]`
+#### Arrays `[]`
 
-Listas indexadas y ordenadas de valores. Pueden contener tipos de datos mixtos de forma nativa.
+Indexed and ordered lists of values. They can natively contain mixed data types.
 
-```tero
-puertos_permitidos: [80, 443, 8080],
-estado_servidores: [true, "en_espera", nil]
+```text
+allowed_ports: [80, 443, 8080],
+server_statuses: [true, "standby", nil]
+
 ```
 
-## 2. Declaración de Versión
+## 2. Version Declaration
 
-**Tero** permite especificar bajo qué versión del estándar ha sido diseñado el archivo de configuración.
+**Tero** allows specifying which version of the standard the configuration file was designed under.
 
-### 2.1 Estructura y Reglas
+### 2.1 Structure and Rules
 
-* **Ubicación:** Si se incluye, debe declararse **estrictamente en la primera línea** del archivo.
-* **Sintaxis:** Se compone de la palabra clave `Tero` (respetando la mayúscula inicial), seguida de exactamente un espacio en blanco y una constante numérica (`Flotante`). Debe finalizar inmediatamente con un salto de línea (`\n`).
-* **Opcionalidad:** La declaración de versión es **opcional**. Si se omite, el *parser* asumirá por defecto la versión más reciente que soporte la librería cliente.
+* **Placement:** If included, it must be declared **strictly on the first line** of the file.
+* **Syntax:** It consists of the keyword `Tero` (respecting the initial capital letter), followed by exactly one whitespace and a numeric constant (`Float`). It must terminate immediately with a newline (`\n`).
+* **Optionality:** The version declaration is **optional**. If omitted, the *parser* will default to the most recent version supported by the client library.
 
-### Ejemplo de Uso
+### Usage Example
 
 ```text
 Tero 0.1
-Usuarios [{
-    Nombre: "GabyDev0"
+Users [{
+    Name: "GabyDev0"
 }]
+
 ```
 
-## 3. Estructuras de Datos: Objetos `{}`
+## 3. Data Structures: Objects `{}`
 
-Un objeto es una colección indexada y ordenada de pares clave-valor. Las claves dentro de un mismo objeto deben ser únicas en su nivel de jerarquía.
+An object is an indexed and ordered collection of key-value pairs. Keys within the same object must be unique at their specific hierarchy level.
 
-### 3.1 Identificadores de Clave
+### 3.1 Key Identifiers
 
-Las claves se declaran sin comillas (estilo texto plano). Deben comenzar obligatoriamente con una letra o un guion bajo (`_`) y solo pueden contener caracteres alfanuméricos (`[a-zA-Z0-9_]`).
+Keys are declared without quotes (plain text style). They must strictly begin with a letter or an underscore (`_`) and can only contain alphanumeric characters (`[a-zA-Z0-9_]`).
 
-### 3.2 Separador de Asignación
+### 3.2 Assignment Separator
 
-* **Regla General:** Se utiliza estrictamente el carácter de dos puntos (`:`) para separar la clave de su valor.
-* **Excepción de Estructura:** Si el valor asignado es una estructura de datos compleja (**Objeto** o **Arreglo**), el uso de los dos puntos es **completamente opcional**.
+* **General Rule:** A colon (`:`) is strictly used to separate a key from its value.
+* **Structural Exception:** If the assigned value is a complex data structure (**Object** or **Array**), the use of the colon is **completely optional**.
 
-### 3.3 Separador de Elementos y Comas
+### 3.3 Element Separator and Commas
 
-* **Delimitador:** Los pares clave-valor dentro de un objeto se separan mediante una coma (`,`) **o** mediante un salto de línea (`\n`).
-* **Coma Terminal (Trailing Comma):** La coma después del último elemento de un objeto es opcional y completamente válida.
+* **Delimiter:** Key-value pairs within an object are separated by a comma (`,`) **or** by a newline (`\n`).
+* **Trailing Comma:** A comma after the last element of an object is optional and completely valid.
 
-### Ejemplos de Sintaxis
+### Syntax Examples
 
-```tero
-# Variante 1: En una sola línea, usando comas y asignación opcional en objeto anidado
-usuario { nombre: "GabyDev0", rol: "admin" }
+```text
+# Variant 1: Single-line using commas and optional assignment in nested object
+user { name: "GabyDev0", role: "admin" }
 
-# Variante 2: Estilo bloque, usando saltos de línea (sin comas ni dos puntos)
-servidor {
+# Variant 2: Block style using newlines (no commas or colons)
+server {
     ip: "127.0.0.1"
-    puerto: 8080
+    port: 8080
     
-    # El formato permite mezclar la omisión de dos puntos en estructuras
-    modulos [ "auth", "api", "db" ]
+    # The format allows mixing the omission of colons in structures
+    modules [ "auth", "api", "db" ]
 }
 
 ```
 
-## 4. Estructuras de Datos: Arreglos (Arrays) `[]`
+## 4. Data Structures: Arrays `[]`
 
-Un arreglo es una lista ordenada e indexada de valores.
+An array is an ordered and indexed list of values.
 
-### 4.1 Reglas de Sintaxis
+### 4.1 Syntax Rules
 
-* **Multitipo:** Un arreglo puede contener cualquier combinación de tipos de datos de forma nativa (enteros, flotantes, cadenas, booleanos, objetos, `nil` u otros arreglos).
-* **Separador de Elementos:** Al igual que los objetos, los elementos dentro de un arreglo se pueden separar mediante una coma (`,`) **o** mediante un salto de línea (`\n`).
-* **Coma Terminal (Trailing Comma):** Permitida y opcional después del último elemento.
+* **Multi-type:** An array can natively contain any combination of data types (integers, floats, strings, booleans, objects, `nil`, or other arrays).
+* **Element Separator:** Just like objects, elements within an array can be separated by a comma (`,`) **or** by a newline (`\n`).
+* **Trailing Comma:** Allowed and optional after the last element.
 
-### Ejemplos de Sintaxis
+### Syntax Examples
 
-```tero
-# Variante 1: En una sola línea separados por comas
-puertos: [80, 443, 8080]
+```text
+# Variant 1: Single-line separated by commas
+ports: [80, 443, 8080]
 
-# Variante 2: Multilinea usando saltos de línea (sin comas)
-servidores [
+# Variant 2: Multi-line using newlines (no commas)
+servers [
     "api.gabydev0.com"
     "auth.gabydev0.com"
 ]
 
-# Variante 3: Arreglo mixto con comas terminales
-datos: [
-    "produccion",
+# Variant 3: Mixed array with a trailing comma
+data: [
+    "production",
     true,
     100,
 ]
+
 ```
 
-## 5. Comentarios
+## 5. Comments
 
-**Tero** permite incluir anotaciones y texto explicativo dentro del archivo utilizando el carácter almohadilla o *hashtag* (`#`).
+**Tero** allows adding annotations and explanatory text within the file using the hash or hashtag character (`#`).
 
-### 5.1 Reglas de Parseo
+### 5.1 Parsing Rules
 
-* **Ignorados por el Parser:** Todo el texto que se encuentre a la derecha de un carácter `#` es completamente ignorado por la librería lectora y no tiene ningún impacto en el objeto final en memoria.
-* **Ubicación:** Los comentarios pueden ocupar una línea completa o colocarse al final de una línea de código (comentarios *inline*).
+* **Ignored by the Parser:** Any text found to the right of a `#` character is completely ignored by the reading library and has zero impact on the final object in memory.
+* **Placement:** Comments can occupy an entire line or be placed at the end of a line of code (*inline* comments).
 
-### Ejemplos de Sintaxis
+### Syntax Examples
 
-```tero
-# Este es un comentario de línea completa para documentar el bloque
-servidor {
-    puerto: 8080 # Comentario inline: Puerto por defecto para la API
-    seguro: true
+```text
+# This is a full-line comment documenting the block
+server {
+    port: 8080 # Inline comment: Default port for the API
+    secure: true
 }
-
 ```

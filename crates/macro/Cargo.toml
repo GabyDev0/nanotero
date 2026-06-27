@@ -1,12 +1,15 @@
 [package]
-name = "nanotero-parser"
+name = "nanotero-macro"
 version = "0.1.0"
 edition = "2024"
 authors = ["GabyDev0"]
-description = "Parser diseñado para el crate nanotero"
 license = "MIT"
 repository = "https://github.com/GabyDev0/nanotero"
 homepage = "https://github.com/GabyDev0/nanotero"
+[lib]
+proc-macro = true
 
 [dependencies]
-nanotero-lex = { workspace = true}
+syn = { version = "2.0.118", features = ["full", "derive"] } # Activa "derive" para parsear structs/enums
+quote = "1.0.46"
+proc-macro2 = "1.0.106"
